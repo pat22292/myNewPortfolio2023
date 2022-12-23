@@ -102,7 +102,7 @@ function Home(props) {
                                                 autoStart: true,
                                                 // loop: true,
                                                 deleteSpeed: .1,
-                                                delay: 75
+                                                delay: 40
                                           }}
 
                                     // onInit={(typewriter) => {
