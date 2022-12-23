@@ -7,9 +7,9 @@ const withTM = require("next-transpile-modules")([
 
 module.exports = withTM({
 
-  // future: {
-  //   webpack5: true,
-  // },
+  future: {
+    webpack5: true,
+  },
   // experimental: { esmExternals: true },
   env: {
     API_URL: process.env.API_URL,
