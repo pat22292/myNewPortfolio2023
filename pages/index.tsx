@@ -86,8 +86,8 @@ function Home(props) {
                   <PortfolioNav />
                   <div className="dark:bg-gray-800 overflow-hidden  place-items-center  md:flex">
                         <div className='w-3/4   bg-white items-center align-middle text-center'>
-                              <button className=' px-6 py-2 text-white bg-minion-yellow' onClick={() => { count == word2.length - 1 ? router.push('/signin') : setCount(count + 1) }}>Add</button>
-                              <h1>{count}</h1>
+                              {/* <button className=' px-6 py-2 text-white bg-minion-yellow' onClick={() => { count == word2.length - 1 ? router.push('/signin') : setCount(count + 1) }}>Add</button>
+                              <h1>{count}</h1> */}
                         </div>
 
                         <div className='left-shadow w-full flex md:px-0 px-11  h-screen justify-center items-center  md:bg-light-steel-blue rounded-tl-full'>
@@ -97,7 +97,7 @@ function Home(props) {
 
                                           options={{
                                                 wrapperClassName: "typewriter-nl md:text-left text-center custom-text-shadow text-rich-black-fogra md:text-9xl text-6xl font-bold leading-none w-full mb-10 md:w-9/12  mb-10",
-                                                cursorClassName: "typewriter-nl md:text-left text-center custom-text-shadow text-rich-black-fogra md:text-9xl text-6xl font-thin leading-none  mb-10 w-9/12",
+                                                cursorClassName: "typewriter-nl blinking-cursor md:text-left text-center  text-rich-black-fogra md:text-9xl text-6xl font-thin leading-none  mb-10 w-9/12",
                                                 strings: words[count],
                                                 autoStart: true,
                                                 // loop: true,
