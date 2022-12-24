@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
 import { options } from 'next-auth/client';
 import { useRouter } from 'next/router'
+import { Example } from '../components/Example';
 
 const DynamicTable = dynamic(() => import('../components/table'),
       { loading: () => <p>...</p> }
@@ -21,7 +22,6 @@ const spring = {
       damping: 10,
       mass: 10
 };
-
 
 
 
@@ -39,7 +39,25 @@ function Home(props) {
       const words = ["Hi! I'm \n Patrick.", "How may I \n help you?", "Need \n a Developer?", "Need a \n Designer?"];
       const word2 = ["Hi! I'm not \n Patrick.", "How may I \n help you?", "You need \n a Developer?", "or a  Designer?"];
       var cnt = 0;
+      const container = {
+            hidden: { opacity: 1, scale: 0 },
+            visible: {
+                  opacity: 1,
+                  scale: 1,
+                  transition: {
+                        delayChildren: 0.3,
+                        staggerChildren: 0.2
+                  }
+            }
+      };
 
+      const item = {
+            hidden: { y: 20, opacity: 0 },
+            visible: {
+                  y: 0,
+                  opacity: 1
+            }
+      };
       const DoSomething = (e) => {
 
             if (e.type == "wheel") supportsWheel = true;
@@ -83,16 +101,17 @@ function Home(props) {
       return (
             <div>
 
-                  <PortfolioNav />
+                  {/* <PortfolioNav /> */}
                   <div className="dark:bg-gray-800 overflow-hidden  place-items-center  md:flex">
-                        <div className='w-3/4   bg-white items-center align-middle text-center'>
+                        <div className='  md:h-screen w-screen flex  bg-white items-center align-middle text-center justify-center'>
                               {/* <button className=' px-6 py-2 text-white bg-minion-yellow' onClick={() => { count == word2.length - 1 ? router.push('/signin') : setCount(count + 1) }}>Add</button>
                               <h1>{count}</h1> */}
+                              <Example />
                         </div>
 
-                        <div className='left-shadow w-full flex md:px-0 px-11  h-screen justify-center items-center  md:bg-light-steel-blue rounded-tl-full'>
+                        <div className='left-shadow w-8/12 flex md:px-0 px-11  h-screen justify-center items-center  md:bg-light-steel-blue '>
 
-                              <div className='w-full md:-ml-32   mb-10  text-left'>
+                              <div className='w-full md:-ml-64   mb-10  text-left'>
                                     <Typewriter
 
                                           options={{

@@ -380,3 +380,19 @@ line {
     color: black;
   }
 }
+
+.containerMotion {
+  width: 150px;
+  height: 150px;
+  background: skyblue;
+  border-radius: 30px;
+}
+
+.item-motion {
+  width: 100%;
+  overflow: visible;
+  stroke: #4b88c8;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
