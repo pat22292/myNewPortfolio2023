@@ -12,6 +12,8 @@ import Typewriter from 'typewriter-effect';
 import { options } from 'next-auth/client';
 import { useRouter } from 'next/router'
 import { Example } from '../components/Example';
+import { ExampleTwo } from '../components/ExampleTwo';
+import { gsap } from "gsap";
 
 const DynamicTable = dynamic(() => import('../components/table'),
       { loading: () => <p>...</p> }
@@ -31,12 +33,23 @@ function Home(props) {
 
       const [scrollY, setScrollY] = useState(0);
       var supportsWheel = false;
-      const [count, setCount] = useState(0);
+      const [count, setCount] = useState(1);
 
       function logit() {
             setScrollY(window.pageYOffset);
       };
-      const words = ["Hi! I'm \n Patrick.", "How may I \n help you?", "Need \n a Developer?", "Need a \n Designer?"];
+      const words =
+            [{
+
+                  text: "Hello! I'm \n Patrick.",
+                  Image: <Example />,
+            },
+            {
+                  text: "How may I \n help you?",
+                  Image: <ExampleTwo />,
+
+            }
+            ];
       const word2 = ["Hi! I'm not \n Patrick.", "How may I \n help you?", "You need \n a Developer?", "or a  Designer?"];
       var cnt = 0;
       const container = {
@@ -58,6 +71,8 @@ function Home(props) {
                   opacity: 1
             }
       };
+      let tl = gsap.timeline();
+      let tl2 = gsap.timeline();
       const DoSomething = (e) => {
 
             if (e.type == "wheel") supportsWheel = true;
@@ -67,11 +82,12 @@ function Home(props) {
 
 
             if (delta == 1) {
-                  // cnt += 1;
+                  setCount(0);
+                  tl.play();
 
-                  cnt < word2.length - 1 ? cnt += .15 : setTimeout(() => {
-                        router.push('searchLocation')
-                  }, 700);;
+                  // cnt < word2.length - 1 ? cnt += .15 : setTimeout(() => {
+                  //       router.push('searchLocation')
+                  // }, 700);;
 
 
 
@@ -80,21 +96,28 @@ function Home(props) {
                   // cnt -= 1
                   cnt = 0
                   // cnt != 0 ? cnt -= 1 : cnt = 0;
-
-
+                  tl.reverse();
+                  setCount(1);
 
             }
 
-            setCount(Math.round(cnt))
-            console.log(cnt);
+
+            // setCount(Math.round(cnt))
+
 
 
       }
 
       useEffect(() => {
-            setCount(0);
-            cnt = 0;
+
             document.addEventListener("wheel", DoSomething);
+            tl.to("#element", {
+                  duration: 1.75,
+                  text: {
+                        value: `${words[1].text}`,
+                  },
+                  delay: .5
+            }).paused(true);
       }, []);
 
 
@@ -106,13 +129,14 @@ function Home(props) {
                         <div className='  md:h-screen w-screen flex  bg-white items-center align-middle text-center justify-center'>
                               {/* <button className=' px-6 py-2 text-white bg-minion-yellow' onClick={() => { count == word2.length - 1 ? router.push('/signin') : setCount(count + 1) }}>Add</button>
                               <h1>{count}</h1> */}
-                              <Example />
+                              {words[count].Image}
                         </div>
 
-                        <div className='left-shadow w-8/12 flex md:px-0 px-11  h-screen justify-center items-center  md:bg-light-steel-blue '>
+                        <div className='w-8/12 left-shadow bg-light-steel-blue flex md:px-0 px-11  h-screen justify-center items-center   '>
 
                               <div className='w-full md:-ml-64   mb-10  text-left'>
-                                    <Typewriter
+                                    <h1 className='typewriter-nl md:text-left text-center custom-text-shadow text-rich-black-fogra md:text-9xl text-6xl font-bold leading-none w-full mb-10 md:w-9/12  ' id='element'>{words[0].text}</h1>
+                                    {/* <Typewriter
 
                                           options={{
                                                 wrapperClassName: "typewriter-nl md:text-left text-center custom-text-shadow text-rich-black-fogra md:text-9xl text-6xl font-bold leading-none w-full mb-10 md:w-9/12  mb-10",
@@ -140,7 +164,7 @@ function Home(props) {
                                     //             .start()
                                     //             ;
                                     // }}
-                                    />
+                                    /> */}
 
                               </div>
 

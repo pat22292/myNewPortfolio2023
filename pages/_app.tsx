@@ -22,6 +22,12 @@ import 'swiper/css/effect-fade'
 
 
 import Head from "next/head";
+import { gsap } from "gsap";
+import { TextPlugin } from "gsap/dist/TextPlugin";
+
+gsap.registerPlugin(TextPlugin);
+
+
 
 function MyApp(props) {
   const { Component, pageProps } = props;
