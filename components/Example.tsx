@@ -19,7 +19,7 @@ export const Example = () => (
         <motion.svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 100 100"
-            className="item-motion w-64 h-64 "
+            className="item-motion md:w-64 md:h-64 w-48 h-48 "
         >
             <motion.path
                 d="M0 100V0l50 50 50-50v100L75 75l-25 25-25-25z"

@@ -108,11 +108,63 @@ function Home(props) {
 
       }
 
+
+      var xDown = null;
+      var yDown = null;
+      function getTouches(evt) {
+            return (
+                  evt.touches || // browser API
+                  evt.originalEvent.touches
+            ); // jQuery
+      }
+      function handleTouchStart(evt) {
+            const firstTouch = getTouches(evt)[0];
+            xDown = firstTouch.clientX;
+            yDown = firstTouch.clientY;
+      }
+
+      function handleTouchMove(evt) {
+            if (!xDown || !yDown) {
+                  return;
+            }
+            var xUp = evt.touches[0].clientX;
+            var yUp = evt.touches[0].clientY;
+            var xDiff = xDown - xUp;
+            var yDiff = yDown - yUp;
+            if (Math.abs(xDiff) > Math.abs(yDiff)) {
+                  /*most significant*/
+                  if (xDiff > 0) {
+                        tl.play();
+                        setCount(0);
+                        // //  document.getElementById("prevBtn").click();
+                  } else {
+                        //  document.getElementById("nextBtn").click();
+                        tl.reverse();
+                        setCount(1);
+                  }
+            } else {
+                  if (yDiff > 0) {
+                        //  document.getElementById("prevBtn").click();
+                        tl.reverse();
+                        setCount(1);
+                  } else {
+                        // document.getElementById("nextBtn").click();
+                        tl.play();
+                        setCount(0);
+                  }
+            }
+            /* reset values */
+            xDown = null;
+            yDown = null;
+      }
+
       useEffect(() => {
 
             document.addEventListener("wheel", DoSomething);
+            document.addEventListener("touchstart", handleTouchStart, false);
+            document.addEventListener("touchmove", handleTouchMove, false);
             tl.to("#element", {
-                  duration: 1.75,
+                  duration: 1.25,
                   text: {
                         value: `${words[1].text}`,
                   },
@@ -125,46 +177,18 @@ function Home(props) {
             <div>
 
                   {/* <PortfolioNav /> */}
-                  <div className="dark:bg-gray-800 overflow-hidden  place-items-center  md:flex">
-                        <div className='  md:h-screen w-screen flex  bg-white items-center align-middle text-center justify-center'>
+                  <div className="dark:bg-gray-800 overflow-hidden  place-items-center  md:flex  md:flex-row grid grid-cols-2  h-screen ">
+                        <div className=' col-span-2 h-96  md:h-screen w-screen flex  bg-white items-center align-middle text-center justify-center'>
                               {/* <button className=' px-6 py-2 text-white bg-minion-yellow' onClick={() => { count == word2.length - 1 ? router.push('/signin') : setCount(count + 1) }}>Add</button>
                               <h1>{count}</h1> */}
                               {words[count].Image}
                         </div>
 
-                        <div className='w-8/12 left-shadow bg-light-steel-blue flex md:px-0 px-11  h-screen justify-center items-center   '>
+                        <div className='md:w-8/12 h-full col-span-2 w-screen md:h-screen left-shadow bg-light-steel-blue flex md:px-0 px-11 justify-center items-center   '>
 
-                              <div className='w-full md:-ml-64   mb-10  text-left'>
-                                    <h1 className='typewriter-nl md:text-left text-center custom-text-shadow text-rich-black-fogra md:text-9xl text-6xl font-bold leading-none w-full mb-10 md:w-9/12  ' id='element'>{words[0].text}</h1>
-                                    {/* <Typewriter
+                              <div className='w-full md:-ml-64 absolute flex justify-center mb-60'>
+                                    <h1 className='typewriter-nl md:text-left text-center  custom-text-shadow text-rich-black-fogra md:text-9xl text-7xl font-bold leading-none w-full  md:w-9/12  ' id='element'>{words[0].text}</h1>
 
-                                          options={{
-                                                wrapperClassName: "typewriter-nl md:text-left text-center custom-text-shadow text-rich-black-fogra md:text-9xl text-6xl font-bold leading-none w-full mb-10 md:w-9/12  mb-10",
-                                                cursorClassName: "typewriter-nl blinking-cursor md:text-left text-center  text-rich-black-fogra md:text-9xl text-6xl font-thin leading-none  mb-10 w-9/12",
-                                                strings: words[count],
-                                                autoStart: true,
-                                                // loop: true,
-                                                deleteSpeed: .1,
-                                                delay: 40
-                                          }}
-
-                                    // onInit={(typewriter) => {
-
-
-                                    //       typewriter.typeString(" HI I'AM PATRICK")
-
-                                    //             .callFunction(() => {
-                                    //                   console.log('String typed out!');
-                                    //             })
-
-                                    //             .callFunction(() => {
-                                    //                   console.log('All strings were deleted');
-                                    //             })
-                                    //             .deleteAll()
-                                    //             .start()
-                                    //             ;
-                                    // }}
-                                    /> */}
 
                               </div>
 

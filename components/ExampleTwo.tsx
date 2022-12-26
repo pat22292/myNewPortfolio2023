@@ -29,11 +29,11 @@ const icon2 = {
 
 
 export const ExampleTwo = () => (
-    <div className=" ">
+    <div className=" flex">
         <motion.svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 720 720"
-            className="item-motion  "
+            className="item-motion md:w-64 md:h-64  w-48 h-48"
         >
             <motion.path
                 d="M267.3,222.2v-16.4c0-4.6-4-8.3-9-8.3H122.2c-5,0-9,3.7-9,8.3v100.8c0,4.6,4,8.3,9,8.3h136.2
