@@ -41,11 +41,11 @@ function Home(props) {
       const words =
             [{
 
-                  text: "Hello! I'm \n Patrick.",
+                  text: "Hello! I'm Patrick.",
                   Image: <Example />,
             },
             {
-                  text: "How may I \n help you?",
+                  text: "How may I help you?",
                   Image: <ExampleTwo />,
 
             }
@@ -178,7 +178,7 @@ function Home(props) {
 
                   {/* <PortfolioNav /> */}
                   <div className="dark:bg-gray-800 overflow-hidden  place-items-center  md:flex  md:flex-row grid grid-cols-2  h-screen ">
-                        <div className=' col-span-2 h-96  md:h-screen w-screen flex  bg-white items-center align-middle text-center justify-center'>
+                        <div className=' col-span-2 h-full md:h-screen w-screen flex  bg-white items-center align-middle text-center justify-center'>
                               {/* <button className=' px-6 py-2 text-white bg-minion-yellow' onClick={() => { count == word2.length - 1 ? router.push('/signin') : setCount(count + 1) }}>Add</button>
                               <h1>{count}</h1> */}
                               {words[count].Image}
@@ -186,8 +186,8 @@ function Home(props) {
 
                         <div className='md:w-8/12 h-full col-span-2 w-screen md:h-screen left-shadow bg-light-steel-blue flex md:px-0 px-11 justify-center items-center   '>
 
-                              <div className='w-full md:-ml-64 absolute flex justify-center mb-60'>
-                                    <h1 className='typewriter-nl md:text-left text-center  custom-text-shadow text-rich-black-fogra md:text-9xl text-7xl font-bold leading-none w-full  md:w-9/12  ' id='element'>{words[0].text}</h1>
+                              <div className='md:-ml-64 absolute flex  md:mb-2 mb-60'>
+                                    <h1 className='typewriter-nl md:text-left text-center  custom-text-shadow text-rich-black-fogra md:text-9xl text-6xl md:font-bold font-extrabold leading-none  md:w-9/12  ' id='element'>{words[0].text}</h1>
 
 
                               </div>
