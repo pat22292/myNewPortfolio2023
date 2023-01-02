@@ -14,6 +14,8 @@ import { useRouter } from 'next/router'
 import { Example } from '../components/Example';
 import { ExampleTwo } from '../components/ExampleTwo';
 import { gsap } from "gsap";
+import RoughEase from "gsap";
+import { EasePack } from 'gsap-trial/src/all';
 
 const DynamicTable = dynamic(() => import('../components/table'),
       { loading: () => <p>...</p> }
@@ -32,6 +34,7 @@ function Home(props) {
       const threshold = 100;
 
       const [scrollY, setScrollY] = useState(0);
+      const [typeStart, setTypeStart] = useState(false);
       var supportsWheel = false;
       const [count, setCount] = useState(1);
 
@@ -39,16 +42,34 @@ function Home(props) {
             setScrollY(window.pageYOffset);
       };
       const words =
-            [{
+            [
+                  {
+                        id: 1,
+                        text: "Hello! I'm Patrick.",
+                        Image: <ExampleTwo />,
+                  },
+                  {
+                        id: 2,
+                        text: "How may I help you?",
+                        Image: <Example />,
 
-                  text: "Hello! I'm Patrick.",
-                  Image: <Example />,
-            },
-            {
-                  text: "How may I help you?",
-                  Image: <ExampleTwo />,
+                  },
+                  {
+                        id: 3,
+                        text: "Need a Developer?",
+                        Image: <ExampleTwo />,
 
-            }
+                  },
+                  {
+                        id: 4,
+                        text: "or a Designer?",
+                        Image: <Example />,
+                  },
+                  {
+                        id: 5,
+                        text: "Hello! I'm Patrick.",
+                        Image: <ExampleTwo />,
+                  }
             ];
       const word2 = ["Hi! I'm not \n Patrick.", "How may I \n help you?", "You need \n a Developer?", "or a  Designer?"];
       var cnt = 0;
@@ -73,7 +94,9 @@ function Home(props) {
       };
       let tl = gsap.timeline();
       let tl2 = gsap.timeline();
+      let tl3 = gsap.timeline();
       const DoSomething = (e) => {
+
 
             if (e.type == "wheel") supportsWheel = true;
             else if (supportsWheel) return;
@@ -82,9 +105,11 @@ function Home(props) {
 
 
             if (delta == 1) {
-                  setCount(0);
-                  tl.play();
+                  // setCount(0);
 
+                  tl.play();
+                  tl2.play();
+                  // tl2.reverse();
                   // cnt < word2.length - 1 ? cnt += .15 : setTimeout(() => {
                   //       router.push('searchLocation')
                   // }, 700);;
@@ -94,14 +119,18 @@ function Home(props) {
 
             } else {
                   // cnt -= 1
-                  cnt = 0
+                  // cnt = 0
                   // cnt != 0 ? cnt -= 1 : cnt = 0;
                   tl.reverse();
-                  setCount(1);
+                  tl2.reverse();
+                  // tl.play();
+                  // tl2.play();
+
+                  // setCount(1);
 
             }
-
-
+            // tl3.restart();
+            // console.log(id[0].innerHTML)
             // setCount(Math.round(cnt))
 
 
@@ -158,18 +187,94 @@ function Home(props) {
             yDown = null;
       }
 
+
+
+      //Create a custom bounce ease:
+
+
+
       useEffect(() => {
 
             document.addEventListener("wheel", DoSomething);
             document.addEventListener("touchstart", handleTouchStart, false);
             document.addEventListener("touchmove", handleTouchMove, false);
-            tl.to("#element", {
-                  duration: 1.25,
-                  text: {
-                        value: `${words[1].text}`,
-                  },
-                  delay: .5
-            }).paused(true);
+            var slides = document.querySelectorAll(".img-galleries");
+
+            var id = document.getElementsByClassName('carousel-text');
+            // 
+            console.log(words.length);
+            // console.log(id.innerText);
+            // tl.fromTo('.img-galleries', { duration: 2.5, ease: "bounce.inOut", y: 500 }, { duration: 2.5, ease: "bounce.inOut", y: 0 }).addPause();
+
+            for (var i = 1; i < words.length; i++) {
+
+
+                  tl.add("intro")
+                        .staggerFromTo(
+                              `.slide-${i}`,
+                              .25,
+
+                              { autoAlpha: 1, },
+                              { opacity: 0, ease: "power4.inOut" },
+                              ".25"
+                        )
+                        .fromTo(
+                              `.slide-${i + 1}`,
+                              .25,
+                              { opacity: 0 },
+                              { autoAlpha: 1, ease: "power4.inOut" },
+                              "intro",
+
+                        )
+                        .addPause();
+            }
+            for (var j = 1; j < words.length; j++) {
+
+
+
+                  tl2.add("intro-text")
+                        .staggerFromTo(
+                              `.text-${j}`,
+                              .75,
+
+                              { display: "block", text: { value: `${words[j - 1].text}` } },
+                              { text: { value: `` }, ease: "power4.inOut" },
+                              .75
+                        )
+                        .fromTo(
+                              ".text-" + (j + 1),
+                              .75,
+                              { text: { value: `` }, ease: "power4.inOut" },
+                              { display: "block", text: { value: `${words[j].text}` }, ease: "power4.inOut" },
+                              "intro-text"
+
+                        )
+                        // .to(".text-" + (i - 1), .5,
+                        //       {
+                        //             text: {
+                        //                   value: `${document.getElementsByClassName(`text-${i}`)[0].innerHTML}`,
+                        //             }
+                        //       },
+
+
+                        //       //  .5
+                        // ).paused(true)
+
+
+
+                        .addPause();
+            }
+
+
+            // console.log(slides.length);
+
+            // tl3.to("#element", {
+            //       duration: 1.25,
+            //       text: {
+            //             value: `${words[1].text}`,
+            //       },
+            //       delay: .5
+            // }).paused(true);
       }, []);
 
 
@@ -181,15 +286,28 @@ function Home(props) {
                         <div className=' col-span-2 h-full md:h-screen w-screen flex  bg-white items-center align-middle text-center justify-center'>
                               {/* <button className=' px-6 py-2 text-white bg-minion-yellow' onClick={() => { count == word2.length - 1 ? router.push('/signin') : setCount(count + 1) }}>Add</button>
                               <h1>{count}</h1> */}
-                              {words[count].Image}
+                              {words.map((title, index) => {
+                                    return <div className={`fixed  bg-white img-galleries slide-${title.id}`} key={index} >
+
+
+
+                                          {title.Image}
+                                    </div>
+                              })}
                         </div>
 
-                        <div className='md:w-8/12 h-full col-span-2 w-screen md:h-screen left-shadow bg-light-steel-blue flex md:px-0 px-11 justify-center items-center   '>
+                        <div className='h-full col-span-2 w-screen md:h-screen left-shadow bg-light-steel-blue flex md:px-0  items-center   '>
 
-                              <div className='md:-ml-64 absolute flex  md:mb-2 mb-60'>
-                                    <h1 className='typewriter-nl md:text-left text-center  custom-text-shadow text-rich-black-fogra md:text-9xl text-6xl md:font-bold font-extrabold leading-none  md:w-9/12  ' id='element'>{words[0].text}</h1>
+                              <div className='md:-ml-32 absolute md:w-6/12   flex  items-center '>
+                                    {/* <h1 className='typewriter-nl md:text-left text-center  custom-text-shadow text-rich-black-fogra md:text-9xl text-6xl md:font-bold font-extrabold leading-none  md:w-9/12  ' id='element'>{words[0].text}</h1> */}
+
+                                    {words.map((title, index) => {
+
+                                          return <h1 className={`hidden absolute w-1/2  md:text-left text-center custom-text-shadow text-rich-black-fogra md:text-9xl text-6xl md:font-bold font-extrabold leading-none   text-${title.id}`} key={index} ></h1>
 
 
+
+                                    })}
                               </div>
 
                               {/* <h1 className='text-left custom-text-shadow text-rich-black-fogra text-9xl font-bold leading-none  -ml-64 mb-10 w-9/12 '>

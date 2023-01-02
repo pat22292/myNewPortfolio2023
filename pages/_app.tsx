@@ -24,8 +24,10 @@ import 'swiper/css/effect-fade'
 import Head from "next/head";
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/dist/TextPlugin";
+import { CustomEase } from "gsap/dist/CustomEase";
 
-gsap.registerPlugin(TextPlugin);
+
+gsap.registerPlugin(TextPlugin, CustomEase);
 
 
 
